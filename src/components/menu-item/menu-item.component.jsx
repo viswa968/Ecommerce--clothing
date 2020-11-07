@@ -4,6 +4,7 @@ import './menu-item.styles.scss'
 
 const MenuItem = ({title, imageUrl,size,history,linkUrl,match}) => (
     <div className={`${size} menu-item`}
+    // here, match.url gets us the current url. bcoz we can be anywhere in the website.
     onClick= {() => history.push(`${match.url}${linkUrl}`)}>
     <div className ="background-image" 
          style= {{
