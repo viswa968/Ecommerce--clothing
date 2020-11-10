@@ -13,6 +13,35 @@ const config ={
     measurementId: "G-CP6VDDGK4R"
   }
 
+  export const createUserProfileDocument = async (userAuth, additionalData) => {
+    // only take data if user is logged in .  
+    if(!userAuth) return;
+
+    const userRef=firestore.doc(`users/${userAuth.uid}`);
+    const snapShot = await userRef.get()
+    
+    if(!snapShot.exists) {
+        // checking if user data exists in db. Else, add
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+    
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+    }catch(error) {
+      console.log("error creating a new user",error.message);
+    }
+  }
+    return userRef;
+  }
+
+
+
   firebase.initializeApp(config);
 
   // auth we have exported abov in the import library
