@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import './header.styles.scss';
 import {ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
+//connect takes in a function and powers it up and returns a function.
+import { connect } from 'react-redux';
 
 
 const Header = ({ currentUser }) => (
@@ -32,4 +34,10 @@ const Header = ({ currentUser }) => (
     </div>
 )
 
-export default Header;
+const mapStateToProps = state => ({
+    // here, the state is the root state(global state)
+    // this will help us get the current state of the user.
+    currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps)(Header);
